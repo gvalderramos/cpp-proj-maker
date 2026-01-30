@@ -1,0 +1,26 @@
+[project]
+name = "cpp-proj-maker"
+version = "0.1.0"
+description = "A CPP/CMake project creator"
+authors = [
+    {name = "Gabriel Valderramos"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "inquirerpy (>=0.3.4,<0.4.0)",
+    "pytest (>=9.0.2,<10.0.0)",
+    "pyinstaller (>=6.18.0,<7.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "cpp_proj_maker", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+cpp-proj-maker = "cpp_proj_maker.main:main"

@@ -1,0 +1,6 @@
+{% for item in libraries %}
+add_subdirectory({{ item }})
+{% endfor %}
+{% for item in executables %}
+add_subdirectory({{ item }})
+{% endfor %}
