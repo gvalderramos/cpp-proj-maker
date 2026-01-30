@@ -46,16 +46,6 @@ jobs:
         run: |
           poetry run pyinstaller cpp-proj-maker.spec
 
-      - name: Rename binary (Linux / macOS)
-        if: runner.os != 'Windows'
-        run: |
-          mv dist/cpp-proj-maker dist/cpp-proj-maker-${{ runner.os }}
-
-      - name: Rename binary (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          rename dist\\cpp-proj-maker.exe cpp-proj-maker-Windows.exe
-
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:

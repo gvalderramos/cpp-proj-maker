@@ -1,5 +1,6 @@
 # cpp-proj-maker.spec
 # -*- mode: python ; coding: utf-8 -*-
+import sys
 
 from PyInstaller.utils.hooks import collect_data_files, collect_submodules
 
@@ -37,7 +38,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name="cpp-proj-maker",
+    name=f"cpp-proj-maker-{sys.platform}",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
