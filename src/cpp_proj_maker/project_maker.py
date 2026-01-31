@@ -19,14 +19,14 @@ class ProjectMaker:
         self._tests_path = self._root / "tests"
         self._docs_path = self._root / "docs"
 
-    def _render_and_write(self, template_name: str, destination: Path) -> None:
+    def _render_and_write(self, template_name: str, destination: Path, **kwargs) -> None:
         destination.parent.mkdir(parents=True, exist_ok=True)
         try:
             template = self._templates.get_template(template_name)
         except TemplateNotFound:
             raise FileNotFoundError(f"Template not found: {template_name}")
 
-        content = template.render(**asdict(self._config))
+        content = template.render(**asdict(self._config), **kwargs)
         destination.write_text(content)
 
     def _create_file_from_template(self, template_name: str, destination: Path) -> None:
@@ -36,7 +36,7 @@ class ProjectMaker:
         for item in items:
             item_path = destination / item
             item_path.mkdir(parents=True, exist_ok=True)
-            self._render_and_write(template_name, item_path / "CMakeLists.txt")
+            self._render_and_write(template_name, item_path / "CMakeLists.txt", target_name=item)
 
     def _init_git_repo(self) -> None:
         try:

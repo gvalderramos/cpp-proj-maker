@@ -3,17 +3,17 @@ include(GNUInstallDirs)
 set(EXE_SOURCE_FILES
     main.cpp
 )
-add_executable({{ name }} ${EXE_SOURCE_FILES})
-target_include_directories({{ name }}
+add_executable({{ target_name }} ${EXE_SOURCE_FILES})
+target_include_directories({{ target_name }}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include>
         {% if common_libraries %}"${CMAKE_SOURCE_DIR}/include"{% endif %}
 )
-install(TARGETS {{ name }}
+install(TARGETS {{ target_name }}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-target_link_libraries({{ name }}
+target_link_libraries({{ target_name }}
     PRIVATE
-        {{ common_libraries | reject('equalto', name) | join(' ') }}
+        {{ common_libraries | reject('equalto', target_name) | join(' ') }}
 )
