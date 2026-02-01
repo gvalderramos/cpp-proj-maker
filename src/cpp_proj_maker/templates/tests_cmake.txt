@@ -15,6 +15,7 @@ add_executable({{ name }}-tests
 target_link_libraries({{ name }}-tests
     PRIVATE
         gtest gtest_main
+        {%if libraries %}{{ libraries | join(' ') }}{%endif%} 
 )
 target_include_directories({{ name }}-tests
     PRIVATE
