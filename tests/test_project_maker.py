@@ -35,8 +35,8 @@ def templates() -> Environment:
         "main_cmake.txt": "# Project CMake: {{ name }}\n",
         "readme_file.txt": "# {{ name }}\n{{ description }}\n",
         "sub_cmake.txt": "# Subdir CMake for {{ name }}\n",
-        "library_cmake.txt": "# Library {{ name }} - {{ cpp_standard }}\n",
-        "executable_cmake.txt": "# Executable {{ name }}\n",
+        "library_cmake.txt": "# Library {{ target_name }} - {{ cpp_standard }}\n",
+        "executable_cmake.txt": "# Executable {{ target_name }}\n",
         "tests_cmake.txt": "# Tests for {{ name }}\n",
         "test_cpp_cmake.txt": "// test main for {{ name }}\n",
         "doc_doxyfile.txt": "# Doxygen for {{ name }}\n",
@@ -88,6 +88,10 @@ def test_project_maker_creates_structure(cfg, tmp_path: Path):
     assert (src / "libA" / "CMakeLists.txt").exists()
     assert (src / "libB" / "CMakeLists.txt").exists()
     assert (src / "app" / "CMakeLists.txt").exists()
+    for target in ["libA", "libB", "app"]:
+        target_cmake = (src / target / "CMakeLists.txt").read_text()
+        assert target in target_cmake
+        assert "20" in target_cmake if "lib" in target else True
 
     # include common libraries
     include_lib = tmp_path / "include" / "libA"

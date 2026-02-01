@@ -3,20 +3,20 @@ include(GNUInstallDirs)
 set(LIB_SOURCE_FILES
     # Add source files here
 )
-add_library({{ name }} ${LIB_SOURCE_FILES})
-target_include_directories({{ name }}
+add_library({{ target_name }} ${LIB_SOURCE_FILES})
+target_include_directories({{ target_name }}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include>
         {% if common_libraries %}"${CMAKE_SOURCE_DIR}/include"{% endif %}
 )
-target_link_libraries({{ name }}
+target_link_libraries({{ target_name }}
     PRIVATE
-        {{ common_libraries | reject('equalto', name) | join(' ') }}
+        {{ common_libraries | reject('equalto', target_name) | join(' ') }}
 )
 
-install(TARGETS {{ name }}
-    EXPORT {{ name }}Targets
+install(TARGETS {{ target_name }}
+    EXPORT {{ target_name }}Targets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
